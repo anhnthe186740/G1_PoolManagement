@@ -1,6 +1,5 @@
 package com.example.poolmanagement.entity;
 
-import com.example.poolmanagement.enums.AppEnums;
 import lombok.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -42,9 +41,9 @@ public class User {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @Enumerated(EnumType.STRING)
+
     @Column(name = "gender")
-    private AppEnums.Gender gender;
+    private String gender;
 
     @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
@@ -60,7 +59,7 @@ public class User {
     @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    @Enumerated(EnumType.STRING)
+
     @Column(name = "status")
-    private AppEnums.UserStatus status = AppEnums.UserStatus.Active;
+    private String status;
 }

@@ -1,6 +1,5 @@
 package com.example.poolmanagement.entity;
 
-import com.example.poolmanagement.enums.AppEnums;
 import lombok.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -31,9 +30,8 @@ public class Ticket {
     private Schedule schedule;
 
     @NotNull
-    @Enumerated(EnumType.STRING)
     @Column(name = "ticket_type")
-    private AppEnums.TicketType ticketType;
+    private String ticketType;
 
     @NotNull
     @Column(name = "price")
@@ -46,7 +44,6 @@ public class Ticket {
     @Column(name = "purchase_date")
     private LocalDateTime purchaseDate = LocalDateTime.now();
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private AppEnums.TicketStatus status = AppEnums.TicketStatus.Unused;
+    private String status;
 }
