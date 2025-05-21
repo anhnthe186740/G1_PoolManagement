@@ -1,6 +1,5 @@
 package com.example.poolmanagement.entity;
 
-import com.example.poolmanagement.enums.AppEnums;
 import lombok.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -40,9 +39,8 @@ public class Schedule {
     @Column(name = "child_price")
     private BigDecimal childPrice;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private AppEnums.ScheduleStatus status = AppEnums.ScheduleStatus.Open;
+    private String status;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();

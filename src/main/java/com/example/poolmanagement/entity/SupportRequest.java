@@ -1,6 +1,5 @@
 package com.example.poolmanagement.entity;
 
-import com.example.poolmanagement.enums.AppEnums;
 import lombok.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -25,9 +24,8 @@ public class SupportRequest {
     private User user;
 
     @NotNull
-    @Enumerated(EnumType.STRING)
     @Column(name = "support_type")
-    private AppEnums.SupportType supportType;
+    private String supportType;
 
     @NotNull
     @Column(name = "description", columnDefinition = "TEXT")
@@ -41,9 +39,9 @@ public class SupportRequest {
     @Column(name = "image2_path")
     private String image2Path;
 
-    @Enumerated(EnumType.STRING)
+
     @Column(name = "priority")
-    private AppEnums.Priority priority = AppEnums.Priority.Medium;
+    private String priority;
 
     @Column(name = "submitted_at")
     private LocalDateTime submittedAt = LocalDateTime.now();
@@ -54,7 +52,6 @@ public class SupportRequest {
     @Column(name = "responded_at")
     private LocalDateTime respondedAt;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private AppEnums.FeedbackStatus status = AppEnums.FeedbackStatus.Pending;
+    private String status;
 }
