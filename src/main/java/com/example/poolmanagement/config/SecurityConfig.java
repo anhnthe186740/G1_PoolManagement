@@ -33,6 +33,8 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/", "/login", "/register", "/api/auth/register", "/api/auth/login").permitAll()
+
+                .requestMatchers("/admin/feedback/list").permitAll() // Cho phép truy cập trang feedback mà không cần login
                 .requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
                 .requestMatchers("/api/auth/profile").authenticated()
                 .anyRequest().authenticated()
