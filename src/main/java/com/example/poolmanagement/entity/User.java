@@ -51,9 +51,8 @@ public class User {
     @Column(name = "hire_date")
     private LocalDate hireDate;
 
-    @NotNull
     @ManyToOne
-    @JoinColumn(name = "role_id", nullable = false)
+    @JoinColumn(name = "role_id", nullable = true)
     private Role role;
 
     @Column(name = "created_at")
