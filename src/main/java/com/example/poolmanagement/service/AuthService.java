@@ -83,4 +83,12 @@ public class AuthService {
 
         return request;
     }
+    public User findByEmail(String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+        if (user.isPresent()) {
+            return user.get();
+        } else {
+            throw new RuntimeException("User not found");
+        }
+    }
 }
