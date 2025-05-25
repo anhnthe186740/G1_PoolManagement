@@ -1,6 +1,5 @@
 package com.example.poolmanagement.entity;
 
-import com.example.poolmanagement.enums.AppEnums;
 
 
 import lombok.*;
@@ -44,7 +43,6 @@ public class Feedback {
     @Column(name = "responded_at")
     private LocalDateTime respondedAt;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private AppEnums.FeedbackStatus status = AppEnums.FeedbackStatus.Pending;
+    private String status;
 }
