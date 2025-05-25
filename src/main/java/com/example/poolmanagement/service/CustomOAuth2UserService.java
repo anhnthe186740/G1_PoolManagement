@@ -82,5 +82,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                 oauthUser.getAttributes(),
                 registrationId.equals("github") ? "login" : "email"
         );
+        // Trả về DefaultOAuth2User với authorities và attributes
     }
 }
