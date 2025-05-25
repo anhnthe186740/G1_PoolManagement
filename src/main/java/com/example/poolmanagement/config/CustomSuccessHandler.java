@@ -11,6 +11,7 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
             Authentication authentication) throws IOException {
         // Chuyển hướng đến /api/auth/profile sau khi đăng nhập thành công
-        response.sendRedirect("/api/auth/profile");
+        response.sendRedirect("homepage");
     }
+    // Bạn có thể thêm logic khác nếu cần, ví dụ: ghi log, gửi thông báo, v.v.
 }

@@ -31,25 +31,25 @@
 
 <body>
     <div class="register-container">
-        <h2 class="text-center mb-4">Register</h2>
+        <h2 class="text-center mb-4">Đăng kí</h2>
         <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
         <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
 
         <form th:action="@{/api/auth/register}" th:object="${user}" method="post">
             <div class="mb-3">
-                <label class="form-label">Name</label>
+                <label class="form-label">Tên</label>
                 <input type="text" class="form-control" th:field="*{name}" required>
                 <div th:if="${#fields.hasErrors('name')}" class="error-message" th:errors="*{name}"></div>
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Username</label>
+                <label class="form-label">Tài khoản</label>
                 <input type="text" class="form-control" th:field="*{username}" required>
                 <div th:if="${#fields.hasErrors('username')}" class="error-message" th:errors="*{username}"></div>
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Password</label>
+                <label class="form-label">Mật khẩu</label>
                 <input type="password" class="form-control" th:field="*{password}" required>
                 <div th:if="${#fields.hasErrors('password')}" class="error-message" th:errors="*{password}"></div>
             </div>
@@ -61,33 +61,33 @@
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Phone Number</label>
+                <label class="form-label">Số điện thoại</label>
                 <input type="text" class="form-control" th:field="*{phoneNumber}">
                 <div th:if="${#fields.hasErrors('phoneNumber')}" class="error-message" th:errors="*{phoneNumber}"></div>
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Gender</label>
+                <label class="form-label">Giới tính</label>
                 <select class="form-select" th:field="*{gender}">
                     <option value="">-- Select --</option>
-                    <option value="MALE">Male</option>
-                    <option value="FEMALE">Female</option>
+                    <option value="MALE">Nam</option>
+                    <option value="FEMALE">Nữ</option>
                 </select>
                 <div th:if="${#fields.hasErrors('gender')}" class="error-message" th:errors="*{gender}"></div>
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Date of Birth</label>
+                <label class="form-label">Ngày sinh</label>
                 <input type="date" class="form-control" th:field="*{dateOfBirth}">
                 <div th:if="${#fields.hasErrors('dateOfBirth')}" class="error-message" th:errors="*{dateOfBirth}"></div>
             </div>
 
 
-            <button type="submit" class="btn btn-primary w-100">Register</button>
+            <button type="submit" class="btn btn-primary w-100">Đăng kí</button>
         </form>
 
         <p class="text-center mt-3">
-            Already have an account? <a th:href="@{/login}">Login</a>
+            Đã có tài khoản ? <a th:href="@{/login}">Đăng nhập</a>
         </p>
     </div>
 

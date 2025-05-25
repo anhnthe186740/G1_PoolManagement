@@ -34,6 +34,18 @@ public class HomeController {
         return "auth/register";
     }
 
+    @GetMapping("/")
+    public String getMethodName() {
+        return "redirect:/homepage";
+    }
+    
+
+    @GetMapping("/homepage")
+    public String getHomePage() {
+        return "homepage/index";
+    }
+    
+
     // @PostMapping("/login")
     // public String login(@ModelAttribute("user") User user, Model model) {
     // User loggedInUser = authService.login(user);

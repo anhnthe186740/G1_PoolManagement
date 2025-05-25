@@ -1,5 +1,6 @@
 package com.example.poolmanagement.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,5 +15,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     boolean existsByEmail(String email);
 
     Optional<User> findByEmail(String email);
+    List<User> findByRole_RoleName(String roleName);
 
 }
+// This interface extends JpaRepository to provide CRUD operations for User entities.

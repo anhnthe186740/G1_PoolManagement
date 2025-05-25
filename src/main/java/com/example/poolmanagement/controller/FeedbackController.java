@@ -5,9 +5,11 @@ import com.example.poolmanagement.dto.response.FeedbackResponse;
 import com.example.poolmanagement.service.feedback.FeedbackService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@RestController
+@Controller
 @RequestMapping("/api")
 @Slf4j
 public class FeedbackController {
@@ -17,10 +19,10 @@ public class FeedbackController {
         this.feedbackService = feedbackService;
     }
 
-    // API endpoints
     @PostMapping("/feedback")
-    @ResponseBody
-    public FeedbackResponse createFeedbackApi(@RequestBody @Valid FeedbackRequest request) {
-        return feedbackService.createFeedback(request);
+    public String createFeedbackApi(@ModelAttribute @Valid FeedbackRequest request, RedirectAttributes redirectAttributes) {
+        feedbackService.createFeedback(request);
+        redirectAttributes.addFlashAttribute("successMessage", "Your feedback has been submitted successfully!");
+        return "redirect:/feedback";
     }
 }
