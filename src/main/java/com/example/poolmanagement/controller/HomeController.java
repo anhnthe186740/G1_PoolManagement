@@ -70,4 +70,20 @@ public class HomeController {
         return "/";
     }
 
+    @GetMapping("/about")
+public String aboutPage() {
+    return "about"; // trả về about.html
+}
+
+@GetMapping("/service")
+public String servicePage() {
+    return "service";
+}
+
+@GetMapping("/contact")
+public String contactPage() {
+    return "contact";
+}
+
+
 }

@@ -27,36 +27,49 @@ public class SecurityConfig {
     @Autowired
     private CustomOAuth2UserService customOAuth2UserService; // ✅ OAuth2 service
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/","/homepage", "/login", "/register", "/api/auth/register", "/api/auth/login") 
-                        .permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll() 
-                        .requestMatchers("/api/auth/profile").authenticated() 
-                        .anyRequest().authenticated())
-                .formLogin(form -> form
-                        .loginPage("/login") 
-                        .successHandler(customSuccessHandler())
-                        .permitAll())
-                .oauth2Login(oauth2 -> oauth2
-                        .loginPage("/login")
-                        .userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService)) // xử lý thông tin người dùng từ OAuth2
-                        .defaultSuccessUrl("/dashboard", true) // chuyển hướng sau khi đăng nhập thành công
-                )
-                .rememberMe(remember -> remember
-                        .key("your-secure-key") // chuỗi bất kỳ
-                        .tokenValiditySeconds(7 * 24 * 60 * 60) // 7 ngày
-                )
-                .logout(logout -> logout
-                        .logoutUrl("/logout")
-                        .logoutSuccessUrl("/login?logout")
-                        .permitAll());
+   @Bean
+public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    http
+        .csrf(csrf -> csrf.disable())
+        .authorizeHttpRequests(auth -> auth
+            // ✅ Static resources
+            .requestMatchers("/css/**", "/js/**", "/img/**", "/lib/**", "/static/**").permitAll()
 
-        return http.build();
-    }
+            // ✅ Các trang public
+            .requestMatchers("/", "/homepage", "/login", "/register", "/about", "/service", "/contact", "/signin").permitAll()
+
+            // ✅ Các API công khai
+            .requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
+            .requestMatchers("/api/auth/login").permitAll()
+
+            // 🔒 Các API yêu cầu đăng nhập
+            .requestMatchers("/api/auth/profile").authenticated()
+
+            // 🔒 Còn lại phải đăng nhập
+            .anyRequest().authenticated()
+        )
+        .formLogin(form -> form
+            .loginPage("/login")
+            .successHandler(customSuccessHandler())
+            .permitAll()
+        )
+        .oauth2Login(oauth2 -> oauth2
+            .loginPage("/login")
+            .userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService))
+        )
+        .rememberMe(remember -> remember
+            .key("your-secure-key")
+            .tokenValiditySeconds(7 * 24 * 60 * 60)
+        )
+        .logout(logout -> logout
+            .logoutUrl("/logout")
+            .logoutSuccessUrl("/login?logout")
+            .permitAll()
+        );
+
+    return http.build();
+}
+
 
     @Bean
     public AuthenticationSuccessHandler customSuccessHandler() {
@@ -76,4 +89,6 @@ public class SecurityConfig {
         authProvider.setPasswordEncoder(passwordEncoder());
         return new ProviderManager(authProvider);
     }
+
+    
 }
