@@ -25,51 +25,50 @@ public class SecurityConfig {
     private CustomUserDetailsService customUserDetailsService;
 
     @Autowired
-    private CustomOAuth2UserService customOAuth2UserService; // ✅ OAuth2 service
+    private CustomOAuth2UserService customOAuth2UserService;
 
-   @Bean
-public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http
-        .csrf(csrf -> csrf.disable())
-        .authorizeHttpRequests(auth -> auth
-            // ✅ Static resources
-            .requestMatchers("/css/**", "/js/**", "/img/**", "/lib/**", "/static/**").permitAll()
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .csrf(csrf -> csrf.disable())
+            .authorizeHttpRequests(auth -> auth
+                // ✅ Tài nguyên tĩnh (JS, CSS, ảnh...)
+                .requestMatchers("/css/**", "/js/**", "/img/**", "/lib/**", "/static/**").permitAll()
 
-            // ✅ Các trang public
-            .requestMatchers("/", "/homepage", "/login", "/register", "/about", "/service", "/contact", "/signin").permitAll()
+                // ✅ Các trang công khai
+                .requestMatchers("/", "/homepage", "/login", "/register", "/about/**", "/service/**", "/contact/**", "/signin").permitAll()
 
-            // ✅ Các API công khai
-            .requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
-            .requestMatchers("/api/auth/login").permitAll()
+                // ✅ API công khai
+                .requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
+                .requestMatchers("/api/auth/login").permitAll()
 
-            // 🔒 Các API yêu cầu đăng nhập
-            .requestMatchers("/api/auth/profile").authenticated()
+                // 🔒 API cần đăng nhập
+                .requestMatchers("/api/auth/profile").authenticated()
 
-            // 🔒 Còn lại phải đăng nhập
-            .anyRequest().authenticated()
-        )
-        .formLogin(form -> form
-            .loginPage("/login")
-            .successHandler(customSuccessHandler())
-            .permitAll()
-        )
-        .oauth2Login(oauth2 -> oauth2
-            .loginPage("/login")
-            .userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService))
-        )
-        .rememberMe(remember -> remember
-            .key("your-secure-key")
-            .tokenValiditySeconds(7 * 24 * 60 * 60)
-        )
-        .logout(logout -> logout
-            .logoutUrl("/logout")
-            .logoutSuccessUrl("/login?logout")
-            .permitAll()
-        );
+                // 🔒 Tất cả còn lại đều cần đăng nhập
+                .anyRequest().authenticated()
+            )
+            .formLogin(form -> form
+                .loginPage("/login")
+                .successHandler(customSuccessHandler())
+                .permitAll()
+            )
+            .oauth2Login(oauth2 -> oauth2
+                .loginPage("/login")
+                .userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService))
+            )
+            .rememberMe(remember -> remember
+                .key("your-secure-key")
+                .tokenValiditySeconds(7 * 24 * 60 * 60) // 7 ngày
+            )
+            .logout(logout -> logout
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login?logout")
+                .permitAll()
+            );
 
-    return http.build();
-}
-
+        return http.build();
+    }
 
     @Bean
     public AuthenticationSuccessHandler customSuccessHandler() {
@@ -89,6 +88,4 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
         authProvider.setPasswordEncoder(passwordEncoder());
         return new ProviderManager(authProvider);
     }
-
-    
 }
