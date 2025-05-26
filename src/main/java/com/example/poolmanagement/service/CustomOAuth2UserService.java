@@ -30,10 +30,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     private RoleRepository roleRepository;
 
     @Override
-    public OAuth2User loadUser(OAuth2UserRequest userRequest)
-            throws OAuth2AuthenticationException {
-
-        String registrationId = userRequest.getClientRegistration().getRegistrationId(); // "google", "github"
+    public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+        String registrationId = userRequest.getClientRegistration().getRegistrationId();
         OAuth2User oauthUser = super.loadUser(userRequest);
         Map<String, Object> attributes = oauthUser.getAttributes();
 
@@ -46,7 +44,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             if (name == null) name = username;
         }
 
-        // Check user đã tồn tại chưa
+
         Optional<User> existingUser = userRepository.findByEmail(email);
 
         if (existingUser.isEmpty()) {
@@ -54,7 +52,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             newUser.setEmail(email);
             newUser.setUsername(username);
             newUser.setName(name != null ? name : "No Name");
-            newUser.setPassword(null); // Không dùng mật khẩu
+            newUser.setPassword(null);
             newUser.setPhoneNumber(null);
             newUser.setGender(null);
             newUser.setDateOfBirth(null);
@@ -67,8 +65,9 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             newUser.setRole(role);
 
             userRepository.save(newUser);
+
         } else {
-            // Nếu tồn tại rồi, có thể cập nhật tên
+           
             User user = existingUser.get();
             user.setName(name);
             userRepository.save(user);
