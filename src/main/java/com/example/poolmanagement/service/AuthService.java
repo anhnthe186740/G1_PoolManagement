@@ -4,11 +4,14 @@ import com.example.poolmanagement.entity.Role;
 import com.example.poolmanagement.entity.User;
 import com.example.poolmanagement.repository.RoleRepository;
 import com.example.poolmanagement.repository.UserRepository;
+<<<<<<< HEAD
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+=======
+>>>>>>> feature/nguyen
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,8 +19,18 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+<<<<<<< HEAD
 @Service
 public class AuthService {
+=======
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Optional;
+
+@Service
+public class AuthService {
+
+>>>>>>> feature/nguyen
     @Autowired
     private UserRepository userRepository;
 
@@ -67,6 +80,17 @@ public class AuthService {
         }
     }
 
+<<<<<<< HEAD
+=======
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
+    public void updateUser(User user) {
+        userRepository.save(user);
+    }
+
+>>>>>>> feature/nguyen
     public User login(User request) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
@@ -83,6 +107,7 @@ public class AuthService {
 
         return request;
     }
+<<<<<<< HEAD
     public User findByEmail(String email) {
         Optional<User> user = userRepository.findByEmail(email);
         if (user.isPresent()) {
@@ -91,4 +116,6 @@ public class AuthService {
             throw new RuntimeException("User not found");
         }
     }
+=======
+>>>>>>> feature/nguyen
 }

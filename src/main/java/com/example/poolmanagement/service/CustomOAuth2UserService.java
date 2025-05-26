@@ -30,10 +30,15 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     private RoleRepository roleRepository;
 
     @Override
+<<<<<<< HEAD
     public OAuth2User loadUser(OAuth2UserRequest userRequest)
             throws OAuth2AuthenticationException {
 
         String registrationId = userRequest.getClientRegistration().getRegistrationId(); // "google", "github"
+=======
+    public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+        String registrationId = userRequest.getClientRegistration().getRegistrationId();
+>>>>>>> feature/nguyen
         OAuth2User oauthUser = super.loadUser(userRequest);
         Map<String, Object> attributes = oauthUser.getAttributes();
 
@@ -46,7 +51,11 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             if (name == null) name = username;
         }
 
+<<<<<<< HEAD
         // Check user đã tồn tại chưa
+=======
+
+>>>>>>> feature/nguyen
         Optional<User> existingUser = userRepository.findByEmail(email);
 
         if (existingUser.isEmpty()) {
@@ -54,7 +63,11 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             newUser.setEmail(email);
             newUser.setUsername(username);
             newUser.setName(name != null ? name : "No Name");
+<<<<<<< HEAD
             newUser.setPassword(null); // Không dùng mật khẩu
+=======
+            newUser.setPassword(null);
+>>>>>>> feature/nguyen
             newUser.setPhoneNumber(null);
             newUser.setGender(null);
             newUser.setDateOfBirth(null);
@@ -67,8 +80,14 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             newUser.setRole(role);
 
             userRepository.save(newUser);
+<<<<<<< HEAD
         } else {
             // Nếu tồn tại rồi, có thể cập nhật tên
+=======
+
+        } else {
+           
+>>>>>>> feature/nguyen
             User user = existingUser.get();
             user.setName(name);
             userRepository.save(user);
@@ -82,6 +101,9 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                 oauthUser.getAttributes(),
                 registrationId.equals("github") ? "login" : "email"
         );
+<<<<<<< HEAD
         // Trả về DefaultOAuth2User với authorities và attributes
+=======
+>>>>>>> feature/nguyen
     }
 }

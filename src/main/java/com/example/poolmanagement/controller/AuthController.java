@@ -42,5 +42,9 @@ public class AuthController {
         model.addAttribute("user", user);
         return "auth/profile";
     }
+<<<<<<< HEAD
     // adada
+=======
+
+>>>>>>> feature/nguyen
 }
