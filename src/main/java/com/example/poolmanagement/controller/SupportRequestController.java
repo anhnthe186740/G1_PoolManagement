@@ -15,6 +15,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Slf4j
 public class SupportRequestController {
     private final SupportRequestService supportRequestService;
+    /**
+     * Inject SupportRequestService thông qua constructor.
+     */
 
     public SupportRequestController(SupportRequestService supportRequestService) {
         this.supportRequestService = supportRequestService;
